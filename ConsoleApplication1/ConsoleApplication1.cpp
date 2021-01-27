@@ -9,6 +9,8 @@ std::string encrypt(std::string text, int shift)
 
 	if (shift > 26)
 		move = shift % 26;
+	else if (shift < -26) // do sprawdzenia
+		move = shift % 26;
 	else
 		move = shift;
 
@@ -21,6 +23,12 @@ std::string encrypt(std::string text, int shift)
 
 		else if (text[i] > 64 && text[i] < 91 && text[i] + move > 90) // jesli jest wielka litera i po przesunieciu przekracza wartosc 90, przedzial: 65-90
 				text[i] = 64 + (text[i] + move - 90);
+
+		else if (text[i] > 96 && text[i] < 123 && text[i] + move < 97) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
+			text[i] = 122 + (text[i] + move - 96);
+
+		else if (text[i] > 64 && text[i] < 91 && text[i] + move < 65) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
+			text[i] = 90 + (text[i] + move - 64);
 		else
 		text[i] = text[i] + move;
 	}
@@ -98,6 +106,48 @@ bool test5()
 	return false;
 }
 
+bool test6()
+{
+	std::string szyfr;
+	szyfr = "def";
+	std::string oczekiwany_wynik = "abc";
+
+	std::string  wynik = encrypt(szyfr, -3);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
+
+bool test7()
+{
+	std::string szyfr;
+	szyfr = "abc";
+	std::string oczekiwany_wynik = "xyz";
+
+	std::string  wynik = encrypt(szyfr, -29);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
+
+bool test8()
+{
+	std::string szyfr;
+	szyfr = "ABC";
+	std::string oczekiwany_wynik = "XYZ";
+
+	std::string  wynik = encrypt(szyfr, -29);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
+
 int main()
 {
 	std::string text;
@@ -141,6 +191,21 @@ int main()
 		std::cout << "Test 5: Sukces! " << std::endl;
 	else
 		std::cout << "Test 5: Porazka " << std::endl;
+
+	if (test6())
+		std::cout << "Test 6: Sukces! " << std::endl;
+	else
+		std::cout << "Test 6: Porazka " << std::endl;
+
+	if (test7())
+		std::cout << "Test 7: Sukces! " << std::endl;
+	else
+		std::cout << "Test 7: Porazka " << std::endl;
+
+	if (test8())
+		std::cout << "Test 8: Sukces! " << std::endl;
+	else
+		std::cout << "Test 8: Porazka " << std::endl;
 
 	return 0;
 
