@@ -1,42 +1,40 @@
-﻿#include <iostream>
+﻿#include "Caesar.h"
+#include <iostream>
 #include <string>
-// szyfr Cezara - kazda litere przesuwa sie o okreslona liczbe miejsc np. o 3
-std::string koduj(std::string tekst) // aby to nie bylo zawsze + 3, tylko niech uzytkownik wskazuje o ile chce przesunac. dla dowolne < 26
+
+std::string encrypt(std::string text, int shift) 
 {// szyfr w lewo i prawo. ustaw kierunek. najpier test, ktory sie nie uda + skrajne przypadki. na koniec kilkuwarstwowy szyfr
 	//  ASCII a - 97 . 26 jest malych liter
-	char primo = tekst[0] + 3; // beben musi byc osobna klasa. dla kazdego bebna o ile oraz czy w lewo czy w prawo + skladanie na koniec
-	if (primo > 122) // + rozkoduj. obsluga spacji i znakow specjalnych. 
-		primo = primo - 26;
-	std::cout << "pierwsza: " << primo << std::endl;
-	char secundo = tekst[1] + 3;
-	if (secundo > 122)
-		secundo = secundo - 26;
-	std::cout << "druga: " << secundo << std::endl;
-	char tertio = tekst[2] + 3;
-	if (tertio > 122)
-		tertio = tertio - 26; // mozemy od razu do trzecia sprawdzac czy jest wieksza niz 22 i doejmwoac 26
-	
+	int move = 0;
 
-	std::string nowy = "";
+	if (shift > 26)
+		move = shift % 26;
+	else
+		move = shift;
 
-	nowy += primo;
-	nowy += secundo;
-	nowy += tertio;
-	
+	int size = static_cast<int>(text.size());
 
-	std::cout << nowy << std::endl;
+	for (int i = 0; i < size; i++)
+	{
+		if (text[i] > 96 && text[i] < 123 && text[i] + move > 122) // jesli jest mala litera i po przesunieciu przekracza wartosc 122, przedzial: 97-122
+			text[i] = 96 + (text[i] + move - 122);
 
-	return nowy;
+		else if (text[i] > 64 && text[i] < 91 && text[i] + move > 90) // jesli jest wielka litera i po przesunieciu przekracza wartosc 90, przedzial: 65-90
+				text[i] = 64 + (text[i] + move - 90);
+		else
+		text[i] = text[i] + move;
+	}
+
+	return text;
 }
 
-
-bool test1() // test przeszedl - zostaje na wieki
+bool test1()
 {
 	std::string szyfr;
 	szyfr = "abc";
 	std::string oczekiwany_wynik = "def";
-	
-	std::string  wynik = koduj(szyfr);
+
+	std::string  wynik = encrypt(szyfr, 3);
 
 	if (wynik == oczekiwany_wynik)
 		return true;
@@ -44,13 +42,13 @@ bool test1() // test przeszedl - zostaje na wieki
 	return false;
 }
 
-bool test2() // test przeszedl - zostaje na wieki
+bool test2() 
 {
 	std::string szyfr;
 	szyfr = "xyz"; // skrajnosci
 	std::string oczekiwany_wynik = "abc";
 
-	std::string  wynik = koduj(szyfr);
+	std::string  wynik = encrypt(szyfr, 3);
 
 	if (wynik == oczekiwany_wynik)
 		return true;
@@ -58,22 +56,92 @@ bool test2() // test przeszedl - zostaje na wieki
 	return false;
 }
 
+bool test3()
+{
+	std::string szyfr;
+	szyfr = "ABc"; 
+	std::string oczekiwany_wynik = "DEf";
+
+	std::string  wynik = encrypt(szyfr, 3);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
+
+bool test4()
+{
+	std::string szyfr;
+	szyfr = "XYZ";
+	std::string oczekiwany_wynik = "ABC";
+
+	std::string  wynik = encrypt(szyfr, 3);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
+
+bool test5()
+{
+	std::string szyfr;
+	szyfr = "abc";
+	std::string oczekiwany_wynik = "def";
+
+	std::string  wynik = encrypt(szyfr, 29);
+
+	if (wynik == oczekiwany_wynik)
+		return true;
+
+	return false;
+}
 
 int main()
 {
+	std::string text;
+
+	int key;
+
+	std::cout << "Enter your phrase: " << std::endl;
+	getline(std::cin, text);
+
+	std::cout << "Please choose a number(key) for which you wants the alphabets to be shifted:  " << std::endl;
+	std::cout<< "The key can either be positive (forward shifting), negative (backward shifting) or zero (no shifting). " << std::endl;
+
+	std::cin >> key;
+
+	//const Caesar message;
+
+	//std::cout << "Encrypted Message : " << message.encrypt(text, key) << std::endl;
+
 
 	if (test1())
-		std::cout << "Sukces! " << std::endl;
+		std::cout << "Test 1: Sukces! " << std::endl;
 	else
-		std::cout << "Porazka " << std::endl;
+		std::cout << "Test 1: Porazka " << std::endl;
 
 	if (test2())
-		std::cout << "Test 2 Sukces! " << std::endl;
+		std::cout << "Test 2: Sukces! " << std::endl;
 	else
-		std::cout << "Test 2 Porazka " << std::endl;
+		std::cout << "Test 2: Porazka " << std::endl;
+
+	if (test3())
+		std::cout << "Test 3: Sukces! " << std::endl;
+	else
+		std::cout << "Test 3: Porazka " << std::endl;
+
+	if (test4())
+		std::cout << "Test 4: Sukces! " << std::endl;
+	else
+		std::cout << "Test 4: Porazka " << std::endl;
+
+	if (test5())
+		std::cout << "Test 5: Sukces! " << std::endl;
+	else
+		std::cout << "Test 5: Porazka " << std::endl;
+
+	return 0;
 
 }
-
-// faza czerwona TDD, faza zielona, refactoring
-// chcemy napisac test, ktory ma dzialac. czerwony - nie przechodzi, zielony - przechodzi
-// teraz drugi test testujacy innego stringa. teraz poprawiamy
