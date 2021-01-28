@@ -2,54 +2,23 @@
 #include <iostream>
 #include <string>
 
-std::string encrypt(std::string text, int shift) 
-{// szyfr w lewo i prawo. ustaw kierunek. najpier test, ktory sie nie uda + skrajne przypadki. na koniec kilkuwarstwowy szyfr
-	//  ASCII a - 97 . 26 jest malych liter
-	int move = 0;
-
-	if (shift > 26)
-		move = shift % 26;
-	else if (shift < -26) // do sprawdzenia
-		move = shift % 26;
-	else
-		move = shift;
-
-	int size = static_cast<int>(text.size());
-
-	for (int i = 0; i < size; i++)
-	{
-		if (text[i] > 96 && text[i] < 123 && text[i] + move > 122) // jesli jest mala litera i po przesunieciu przekracza wartosc 122, przedzial: 97-122
-			text[i] = 96 + (text[i] + move - 122);
-
-		else if (text[i] > 64 && text[i] < 91 && text[i] + move > 90) // jesli jest wielka litera i po przesunieciu przekracza wartosc 90, przedzial: 65-90
-				text[i] = 64 + (text[i] + move - 90);
-
-		else if (text[i] > 96 && text[i] < 123 && text[i] + move < 97) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
-			text[i] = 122 + (text[i] + move - 96);
-
-		else if (text[i] > 64 && text[i] < 91 && text[i] + move < 65) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
-			text[i] = 90 + (text[i] + move - 64);
-		else
-		text[i] = text[i] + move;
-	}
-
-	return text;
-}
-
 bool test1()
 {
 	std::string szyfr;
 	szyfr = "abc";
 	std::string oczekiwany_wynik = "def";
 
-	std::string  wynik = encrypt(szyfr, 3);
+	Caesar test;
+
+	std::string wynik = test.encrypt(szyfr, 3);
+	
 
 	if (wynik == oczekiwany_wynik)
 		return true;
 
 	return false;
 }
-
+/*
 bool test2() 
 {
 	std::string szyfr;
@@ -147,31 +116,64 @@ bool test8()
 
 	return false;
 }
-
+*/
 int main()
 {
+	
 	std::string text;
 
-	int key;
+	char task;
+	std::cout << "What would you like to do? Enter 'E' for encoding, enter 'D' for decoding (enter 'D'), or enter 'Q' to quit. " << std::endl;
+	std::cin >> task;
 
-	std::cout << "Enter your phrase: " << std::endl;
-	getline(std::cin, text);
+	do
+{
+	switch(task)
+	{
+	case 'E':
+	{
+		int key;
 
-	std::cout << "Please choose a number(key) for which you wants the alphabets to be shifted:  " << std::endl;
-	std::cout<< "The key can either be positive (forward shifting), negative (backward shifting) or zero (no shifting). " << std::endl;
+		std::cout << "Please choose a number(key) for which you want the alphabets to be shifted:  " << std::endl;
+		std::cout << "The key can either be positive (forward shifting), negative (backward shifting) or zero (no shifting). ";
+		std::cin >> key;
 
-	std::cin >> key;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
 
-	//const Caesar message;
+		std::cout << "Enter your phrase: " << std::endl;
+		getline(std::cin, text);
 
-	//std::cout << "Encrypted Message : " << message.encrypt(text, key) << std::endl;
+		Caesar message;
 
+		std::cout << "Encrypted Message : " << message.encrypt(text, key) << std::endl;
+
+		break;
+	}
+
+	case 'D':
+			// decode words
+	break;
+
+	case 'Q':
+			exit(0);
+	break;
+
+	default: 
+	std::cout<<"Nie ma takiej opcji w menu!";
+	}
+
+	std::cout << "What would you like to do? Enter 'E' for encoding, enter 'D' for decoding (enter 'D'), or enter 'Q' to quit. " << std::endl;
+	std::cin >> task;
+
+} while(!(task == 'Q'));
 
 	if (test1())
 		std::cout << "Test 1: Sukces! " << std::endl;
 	else
 		std::cout << "Test 1: Porazka " << std::endl;
 
+	/*
 	if (test2())
 		std::cout << "Test 2: Sukces! " << std::endl;
 	else
@@ -206,7 +208,7 @@ int main()
 		std::cout << "Test 8: Sukces! " << std::endl;
 	else
 		std::cout << "Test 8: Porazka " << std::endl;
-
+	*/
 	return 0;
 
 }
