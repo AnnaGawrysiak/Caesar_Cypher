@@ -8,9 +8,12 @@ class Caesar
 	int shift;
 
 public:
-	Caesar();				//default constructor, sets shift data to 0
+	Caesar();		//default constructor, sets shift data to 0
+
 	Caesar(std::string text_, int shift_);
 
 	std::string encrypt(std::string text, int shift);
+
+	std::string decrypt(std::string text, int shift);
 };
 

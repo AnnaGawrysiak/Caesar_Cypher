@@ -4,7 +4,6 @@
 
 Caesar::Caesar() 
 {
-	shift = 0;
 }
 
 Caesar::Caesar(std::string text_, int shift_)
@@ -18,9 +17,7 @@ std::string Caesar::encrypt(std::string text, int shift)
 	//  ASCII a - 97 . 26 jest malych liter
 	int move = 0;
 
-	if (shift > 26)
-		move = shift % 26;
-	else if (shift < -26) // do sprawdzenia
+	if (shift > 26 || shift < -26)
 		move = shift % 26;
 	else
 		move = shift;
@@ -45,4 +42,14 @@ std::string Caesar::encrypt(std::string text, int shift)
 	}
 
 	return text;
+}
+
+std::string Caesar::decrypt(std::string text, int shift)
+{
+	
+	Caesar decode;
+	std::string decoded = decode.encrypt(text, (-1)*shift);
+
+	return decoded;
+
 }
