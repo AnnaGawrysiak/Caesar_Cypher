@@ -37,12 +37,7 @@ void First_Cylinder::rotate()
 
 }
 
-//Caesar First_Cylinder::decrypt(Caesar& object)
-//{
-//	std::string text = object.msg;
-
-   // rotate(object, (-1) * shift);
-
-	//return object;
-
-//}
+std::string First_Cylinder::get_text()
+{
+	return text;
+}

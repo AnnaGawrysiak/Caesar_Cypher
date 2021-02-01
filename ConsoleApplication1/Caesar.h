@@ -5,7 +5,7 @@
 
 class Caesar
 {
-public:
+private:
 	std::string msg;
 
 public:
@@ -14,6 +14,10 @@ public:
 	Caesar(std::string msg_);
 
 	void encrypt();
+
+	void decrypt();
+
+	std::string get_msg();
 
 };
 

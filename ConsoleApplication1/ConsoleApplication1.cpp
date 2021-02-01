@@ -14,15 +14,15 @@ int main()
 	std::cout << "Enter your phrase: " << std::endl;
 	getline(std::cin, text);
 
-	//Cezar* szyfr = new Cezar();
-	//auto msg = szyfr->Koduj();
 	Caesar message(text);
 	
 	message.encrypt();
 
-	std::cout << "Encrypted Message : " << message.msg << std::endl;
+	std::cout << "Encrypted Message : " << message.get_msg() << std::endl;
 
-	//std::cout << "Decrypted Message : " << message.decrypt(text, key) << std::endl;
+	message.decrypt();
+	
+	std::cout << "Decrypted Message : " << message.get_msg() << std::endl;
 
 	return 0;
 
