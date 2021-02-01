@@ -1,19 +1,19 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "First_Cylinder.h"
 
 class Caesar
 {
-	std::string text;
-	int shift;
+public:
+	std::string msg;
 
 public:
-	Caesar();		//default constructor, sets shift data to 0
+	Caesar();		
 
-	Caesar(std::string text_, int shift_);
+	Caesar(std::string msg_);
 
-	std::string encrypt(std::string text, int shift);
+	void encrypt();
 
-	std::string decrypt(std::string text, int shift);
 };
 

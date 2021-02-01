@@ -1,5 +1,5 @@
 #include "test.h"
-
+/*
 test::test()
 {
 }
@@ -292,3 +292,4 @@ void test::run()
 		std::cout << "Test 13: Porazka " << std::endl;
 	
 }
+*/
