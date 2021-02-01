@@ -6,8 +6,8 @@
 
 int main()
 {
-	//test* testowa = test::get_instance();
-	//testowa->run(); // testy maja sie same tworzyc, sprawdzac i wyczyscic. jest enkapsulacja.
+	test* testowa = test::get_instance();
+	testowa->run(); // testy maja sie same tworzyc, sprawdzac i wyczyscic. jest enkapsulacja.
 
 	std::string text = "";
 

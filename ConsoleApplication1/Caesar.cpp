@@ -17,12 +17,15 @@ Caesar::Caesar(std::string msg_)
 void Caesar::encrypt()
 {
 	int overlap = -30;
+	keys.push_back(overlap);
 
 	First_Cylinder* first = new First_Cylinder(overlap, msg);
 	first->rotate();
 	msg = first->get_text();
 
 	overlap = 3;
+	keys.push_back(overlap);
+
 	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd(overlap, msg);
 	second->rotate();
 	msg = second->get_text();
@@ -31,25 +34,21 @@ void Caesar::encrypt()
 	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd(overlap, msg);
 	third->rotate();
 	msg = third->get_text();
+
+	keys.push_back(overlap);
 }
 
 void Caesar::decrypt()
 {
-	int overlap = 30;
-
-	First_Cylinder* first = new First_Cylinder(overlap, msg);
+	First_Cylinder* first = new First_Cylinder((-1)*keys[0], msg);
 	first->rotate();
 	msg = first->get_text();
 
-	overlap = -3;
-
-	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd(overlap, msg);
+	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd((-1) * keys[1], msg);
 	second->rotate();
 	msg = second->get_text();
 
-	overlap = -10;
-
-	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd(overlap, msg);
+	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd((-1) * keys[2], msg);
 	third->rotate();
 	msg = third->get_text();
 
