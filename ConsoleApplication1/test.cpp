@@ -9,7 +9,7 @@ test* test::wsk = nullptr;
 test* test::get_instance()
 {
 	if (!wsk)
-		wsk = new test(); // przez new nalezy explicite konstruktor wywolac
+		wsk = new test(); 
 
 	return wsk;
 

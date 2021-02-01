@@ -3,6 +3,8 @@
 #include "Caesar.h"
 #include "Cylinder_Rotate_Odd.h"
 #include "Cylinder_Rotate_3rd.h"
+#include <ctime>
+#include <cstdlib>
 
 
 Caesar::Caesar() 
@@ -16,21 +18,23 @@ Caesar::Caesar(std::string msg_)
 
 void Caesar::encrypt()
 {
-	int overlap = -30;
+	srand(time(0));
+
+	int overlap = (std::rand() % 1000) + 1;
 	keys.push_back(overlap);
 
 	First_Cylinder* first = new First_Cylinder(overlap, msg);
 	first->rotate();
 	msg = first->get_text();
 
-	overlap = 3;
+	overlap = (std::rand() % 1000) + 1;
 	keys.push_back(overlap);
 
 	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd(overlap, msg);
 	second->rotate();
 	msg = second->get_text();
 
-	overlap = 10;
+	overlap = (std::rand() % 1000) + 1;
 	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd(overlap, msg);
 	third->rotate();
 	msg = third->get_text();
