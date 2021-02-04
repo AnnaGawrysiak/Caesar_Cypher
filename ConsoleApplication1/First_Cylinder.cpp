@@ -19,8 +19,8 @@ void First_Cylinder::rotate()
 	int size = static_cast<int>(text.size());
 
 	for (int i = 0; i < size; i++)
-	{
-		if (text[i] > 96 && text[i] < 123 && text[i] + move > 122) // jesli jest mala litera i po przesunieciu przekracza wartosc 122, przedzial: 97-122
+	{	
+		 if (text[i] > 96 && text[i] < 123 && text[i] + move > 122) // jesli jest mala litera i po przesunieciu przekracza wartosc 122, przedzial: 97-122
 			text[i] = 96 + (text[i] + move - 122);
 
 		else if (text[i] > 64 && text[i] < 91 && text[i] + move > 90) // jesli jest wielka litera i po przesunieciu przekracza wartosc 90, przedzial: 65-90

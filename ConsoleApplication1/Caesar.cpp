@@ -18,7 +18,19 @@ Caesar::Caesar(std::string msg_)
 
 void Caesar::encrypt()
 {
-	srand(time(0));
+	srand((unsigned int)time(NULL));
+
+	int count = 0;
+
+	for (unsigned int i = 0; i < msg.size(); i++)
+	{
+		if (msg[i] == ' ')
+		{
+			position_of_spaces.push_back(i + count);
+			count++;
+			msg.erase(msg.begin() + i);
+		}
+	}
 
 	int overlap = (std::rand() % 1000) + 1;
 	keys.push_back(overlap);
@@ -56,7 +68,14 @@ void Caesar::decrypt()
 	third->rotate();
 	msg = third->get_text();
 
+	for (auto it = std::begin(position_of_spaces); it != std::end(position_of_spaces); ++it) 
+	{
+		msg.insert(*it, " ");
+	}
+
 }
+
+
 
 std::string Caesar::get_msg()
 {

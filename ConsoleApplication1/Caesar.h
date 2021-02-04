@@ -9,6 +9,7 @@ class Caesar
 private:
 	std::string msg;
 	std::vector<int> keys;
+	std::vector<int> position_of_spaces;
 
 public:
 	Caesar();		
