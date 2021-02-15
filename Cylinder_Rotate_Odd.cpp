@@ -36,3 +36,13 @@ std::string Cylinder_Rotate_Odd::get_text()
 {
 	return text;
 }
+
+void Cylinder_Rotate_Odd::set_shift(int shift_)
+{
+	shift = shift_;
+}
+
+int Cylinder_Rotate_Odd::get_shift()
+{
+	return shift;
+}

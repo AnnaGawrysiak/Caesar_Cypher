@@ -34,3 +34,13 @@ std::string First_Cylinder::get_text()
 {
 	return text;
 }
+
+void First_Cylinder::set_shift(int shift_)
+{
+	shift = shift_;
+}
+
+int First_Cylinder::get_shift()
+{
+	return shift;
+}
