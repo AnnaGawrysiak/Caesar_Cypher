@@ -1,48 +1,90 @@
 #include <iostream>
 #include <string>
+#include <ctime>
+#include <cstdlib>
 #include "Caesar.h"
+#include "First_Cylinder.h"
+#include "Cylinder_Rotate_Odd.h"
+#include "Cylinder_Rotate_3rd.h"
 
 Caesar::Caesar() 
 {
-	shift = 0;
 }
 
-Caesar::Caesar(std::string text_, int shift_)
+Caesar::Caesar(std::string msg_)
 {
-	text = text_;
-	shift = shift_;
+	msg = msg_;
 }
 
-std::string Caesar::encrypt(std::string text, int shift)
-{// szyfr w lewo i prawo. ustaw kierunek. najpier test, ktory sie nie uda + skrajne przypadki. na koniec kilkuwarstwowy szyfr
-	//  ASCII a - 97 . 26 jest malych liter
-	int move = 0;
+void Caesar::modify_msg(Cylinder* cylinder)
+{
+	cylinder->rotate();
+	msg = cylinder->get_text();
+}
 
-	if (shift > 26)
-		move = shift % 26;
-	else if (shift < -26) // do sprawdzenia
-		move = shift % 26;
-	else
-		move = shift;
+void Caesar::encrypt()
+{
+	srand((unsigned int)time(NULL));
 
-	int size = static_cast<int>(text.size());
+	int count = 0;
 
-	for (int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < msg.size(); i++)
 	{
-		if (text[i] > 96 && text[i] < 123 && text[i] + move > 122) // jesli jest mala litera i po przesunieciu przekracza wartosc 122, przedzial: 97-122
-			text[i] = 96 + (text[i] + move - 122);
-
-		else if (text[i] > 64 && text[i] < 91 && text[i] + move > 90) // jesli jest wielka litera i po przesunieciu przekracza wartosc 90, przedzial: 65-90
-			text[i] = 64 + (text[i] + move - 90);
-
-		else if (text[i] > 96 && text[i] < 123 && text[i] + move < 97) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
-			text[i] = 122 + (text[i] + move - 96);
-
-		else if (text[i] > 64 && text[i] < 91 && text[i] + move < 65) // jest jest mala litera i po przesunieciu w lewo przekracza wartosc 97
-			text[i] = 90 + (text[i] + move - 64);
-		else
-			text[i] = text[i] + move;
+		if (msg[i] == ' ')
+		{
+			position_of_spaces.push_back(i + count);
+			count++;
+			msg.erase(msg.begin() + i);
+		}
 	}
 
-	return text;
+	int overlap = (std::rand() % 1000) + 1;
+	keys.push_back(overlap);
+
+	First_Cylinder* first = new First_Cylinder(overlap, msg);
+	first->rotate();
+	msg = first->get_text();
+	delete first;
+
+	overlap = (std::rand() % 1000) + 1;
+	keys.push_back(overlap);
+
+	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd(overlap, msg);
+	second->rotate();
+	msg = second->get_text();
+
+	overlap = (std::rand() % 1000) + 1;
+	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd(overlap, msg);
+	third->rotate();
+	msg = third->get_text();
+
+	keys.push_back(overlap);
+}
+
+void Caesar::decrypt()
+{
+	First_Cylinder* first = new First_Cylinder((-1)*keys[0], msg);
+	first->rotate();
+	msg = first->get_text();
+
+	Cylinder_Rotate_Odd* second = new Cylinder_Rotate_Odd((-1) * keys[1], msg);
+	second->rotate();
+	msg = second->get_text();
+
+	Cylinder_Rotate_3rd* third = new Cylinder_Rotate_3rd((-1) * keys[2], msg);
+	third->rotate();
+	msg = third->get_text();
+
+	for (auto it = std::begin(position_of_spaces); it != std::end(position_of_spaces); ++it) 
+	{
+		msg.insert(*it, " ");
+	}
+
+}
+
+
+
+std::string Caesar::get_msg()
+{
+	return msg;
 }

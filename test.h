@@ -1,5 +1,8 @@
 #pragma once
 #include "Caesar.h"
+#include "First_Cylinder.h"
+#include "Cylinder_Rotate_Odd.h"
+#include "Cylinder_Rotate_3rd.h"
 
 class test
 {
@@ -29,6 +32,16 @@ public:
 
     bool test8();
 
-    void run(); // obiekt testowy mamy tylko jeden i mozemy go sobie wywolywac ile chcemy
+    bool test9();
+
+    bool test10();
+
+    bool test11();
+
+    bool test12();
+
+    bool test13();
+
+    void run(); 
 
 };

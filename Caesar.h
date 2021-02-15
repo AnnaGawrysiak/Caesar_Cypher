@@ -1,16 +1,28 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include<vector>
+#include "Cylinder.h"
+
 
 class Caesar
 {
-	std::string text;
-	int shift;
-
+private:
+	std::string msg;
+	std::vector<int> keys;
+	std::vector<int> position_of_spaces;
+	void modify_msg(Cylinder* cylinder);
+	
 public:
-	Caesar();				//default constructor, sets shift data to 0
-	Caesar(std::string text_, int shift_);
+	Caesar();		
 
-	std::string encrypt(std::string text, int shift);
+	Caesar(std::string msg_);
+
+	void encrypt();
+
+	void decrypt();
+
+	std::string get_msg();
+
 };
 
