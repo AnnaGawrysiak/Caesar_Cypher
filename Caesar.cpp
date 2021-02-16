@@ -21,8 +21,11 @@ Caesar::Caesar(std::string msg_)
 
 void Caesar::modify_msg(std::vector<std::shared_ptr<Cylinder>> cylinders_configuration_)
 {
-	cylinders_configuration_.at(0)->rotate();
-	msg = cylinders_configuration_.at(0)->get_text();
+	static int i = 0;
+
+	cylinders_configuration_.at(i)->rotate();
+	msg = cylinders_configuration_.at(i)->get_text();
+	i++;
 }
 
 void Caesar::encrypt()
@@ -48,13 +51,11 @@ void Caesar::encrypt()
 	
 	overlap = (std::rand() % 1000) + 1;
 	cylinders_configuration.push_back(std::shared_ptr<Cylinder_Rotate_Odd>(new Cylinder_Rotate_Odd(overlap, msg)));
-	cylinders_configuration.at(1)->rotate();
-	msg = cylinders_configuration.at(1)->get_text();
+	modify_msg(cylinders_configuration);
 	
 	overlap = (std::rand() % 1000) + 1;
 	cylinders_configuration.push_back(std::shared_ptr<Cylinder_Rotate_3rd>(new Cylinder_Rotate_3rd(overlap, msg)));
-	cylinders_configuration.at(2)->rotate();
-	msg = cylinders_configuration.at(2)->get_text();
+	modify_msg(cylinders_configuration);
 	
 }
 
