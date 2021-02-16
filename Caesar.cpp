@@ -8,8 +8,6 @@
 #include "Cylinder_Rotate_Odd.h"
 #include "Cylinder_Rotate_3rd.h"
 
-std::vector<std::shared_ptr<Cylinder>>Caesar::cylinders_configuration;
-
 Caesar::Caesar() 
 {
 }

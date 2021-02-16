@@ -9,7 +9,7 @@ class Caesar
 {
 private:
 	std::string msg;
-	static std::vector<std::shared_ptr<Cylinder>> cylinders_configuration;
+	std::vector<std::shared_ptr<Cylinder>> cylinders_configuration;
 	std::vector<int> position_of_spaces;
 	void modify_msg(std::vector<std::shared_ptr<Cylinder>> cylinders_configuration_);
 	
